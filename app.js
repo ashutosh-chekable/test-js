@@ -15,8 +15,8 @@ document.getElementById('login-form').addEventListener('submit', function (event
         body: JSON.stringify({
             email: username,
             password: password
-        }),
-        credentials: 'include' // Include credentials for cross-origin requests
+        })//,
+        // credentials: 'include' // Include credentials for cross-origin requests
     })
         .then(function (response) {
             if (!response.ok) {
