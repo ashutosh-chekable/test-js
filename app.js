@@ -31,9 +31,6 @@ document.getElementById('login-form').addEventListener('submit', function (event
 
             return fetch('https://process-request-vercel.livelyground-855de826.westus.azurecontainerapps.io/auth/session', {
                 method: 'GET',
-                headers: {
-                    'Accept': 'application/json',
-                },
                 credentials: 'include' // This allows cookies to be sent with the request
             });
         })
