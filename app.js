@@ -8,49 +8,35 @@ document.getElementById('login-form').addEventListener('submit', function (event
     const password = document.getElementById('password').value;
     console.log('Username:', username, 'Password:', password);
 
-    fetch(`${url}/auth/login`, {
-        method: 'POST',
+    axios.post(`${url}/auth/login`, {
+        email: username,
+        password: password
+    }, {
         headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json', // Ensure the server can respond with JSON
-        },
-        body: JSON.stringify({
-            email: username,
-            password: password
-        })
-        // ,
-        // credentials: 'include' // Include credentials for cross-origin requests
+        }
     })
         .then(function (response) {
-            if (!response.ok) {
-                return response.json().then(error => {
-                    throw new Error('Login failed: ' + (error.message || response.statusText));
-                });
-            }
-            return response.json();
-        })
-        .then(function (data) {
-            console.log('Login successful', data);
-
-            return fetch(`${url}/auth/session`, {
-                method: 'POST',
-                credentials: 'include' // This allows cookies to be sent with the request
+            console.log('Login successful', response.data);
+            return axios.post(`${url}/auth/session`, {}, {
+                withCredentials: true // This allows cookies to be sent with the request
             });
         })
         .then(function (response) {
-            if (!response.ok) {
-                return response.json().then(error => {
-                    throw new Error('Session check failed: ' + (error.message || response.statusText));
-                });
-            }
-            return response.json();
-        })
-        .then(function (data) {
             document.getElementById('message').textContent = 'Session is active!';
-            console.log('Session active', data);
+            console.log('Session active', response.data);
         })
         .catch(function (error) {
-            document.getElementById('message').textContent = error.message;
-            console.error(error);
+            if (error.response) {
+                document.getElementById('message').textContent = 'Error: ' + (error.response.data.message || error.response.statusText);
+                console.error('Error response:', error.response.data);
+            } else if (error.request) {
+                document.getElementById('message').textContent = 'Error: No response received';
+                console.error('Error request:', error.request);
+            } else {
+                document.getElementById('message').textContent = 'Error: ' + error.message;
+                console.error('Error message:', error.message);
+            }
         });
 });
