@@ -12,10 +12,7 @@ document.getElementById('login-form').addEventListener('submit', function (event
         email: username,
         password: password
     }, {
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json', // Ensure the server can respond with JSON
-        }
+        withCredentials: true
     })
         .then(function (response) {
             console.log('Login successful', response.data);
