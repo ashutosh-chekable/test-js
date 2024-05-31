@@ -2,8 +2,8 @@ document.getElementById('login-form').addEventListener('submit', function (event
     event.preventDefault();
     console.log('Form submitted');
 
-    // const url = "https://process-request-vercel.livelyground-855de826.westus.azurecontainerapps.io/"
-    const url = "http://127.0.0.1:5001"
+    const url = "https://process-request-vercel.livelyground-855de826.westus.azurecontainerapps.io/"
+    // const url = "http://127.0.0.1:5001"
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
     console.log('Username:', username, 'Password:', password);
