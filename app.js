@@ -2,11 +2,13 @@ document.getElementById('login-form').addEventListener('submit', function (event
     event.preventDefault();
     console.log('Form submitted');
 
+    // const url = "https://process-request-vercel.livelyground-855de826.westus.azurecontainerapps.io/"
+    const url = "http://127.0.0.1:5001"
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
     console.log('Username:', username, 'Password:', password);
 
-    fetch('https://process-request-vercel.livelyground-855de826.westus.azurecontainerapps.io/auth/login', {
+    fetch(`${url}/auth/login`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -15,8 +17,8 @@ document.getElementById('login-form').addEventListener('submit', function (event
         body: JSON.stringify({
             email: username,
             password: password
-        })//,
-        // credentials: 'include' // Include credentials for cross-origin requests
+        }),
+        credentials: 'include' // Include credentials for cross-origin requests
     })
         .then(function (response) {
             if (!response.ok) {
@@ -29,8 +31,10 @@ document.getElementById('login-form').addEventListener('submit', function (event
         .then(function (data) {
             console.log('Login successful', data);
 
-            return fetch('https://process-request-vercel.livelyground-855de826.westus.azurecontainerapps.io/auth/session', {
-                method: 'GET',
+            console.log(response.headers)
+
+            return fetch(`${url}/auth/session`, {
+                method: 'POST',
                 credentials: 'include' // This allows cookies to be sent with the request
             });
         })
