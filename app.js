@@ -32,8 +32,6 @@ document.getElementById('login-form').addEventListener('submit', function (event
         .then(function (data) {
             console.log('Login successful', data);
 
-            console.log(response.headers)
-
             return fetch(`${url}/auth/session`, {
                 method: 'POST',
                 credentials: 'include' // This allows cookies to be sent with the request
